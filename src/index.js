@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import express from "express";
 import bodyParser from "body-parser";
 import { authRouter } from "./Router/UserAuthenticationRouter.js";
@@ -16,15 +15,7 @@ import { transportRouter } from "./Router/Destination.js";
 
 const app = express();
 const port = 3000;
-const cors = require('cors');
-const corsConfig = {
-  origin: "*",
-  credential : true,
-  methods: ["GET", "POST", "PUT", "DELETE"]
-};
 try {
-  app.options("", cors(corsConfig))
-  app.use(cors(corsConfig));
   app.use(bodyParser.json());
 
   // Authentication Routers
@@ -50,8 +41,11 @@ try {
   // MiddleWare Error Handler
   app.use(errorHandler);
 
+  app.get('/', async (req, res) => {
+    res.json({ message : "Selamat Datang"});
+  })
   app.listen(port, function () {
-    alert("Server berhasil dijalankan pada port " + port);
+    console.log("Server berhasil dijalankan pada port " + port);
   });
 } catch (error) {
   console.log(error);
