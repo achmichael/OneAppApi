@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import express from "express";
 import bodyParser from "body-parser";
 import { authRouter } from "./Router/UserAuthenticationRouter.js";
@@ -15,27 +16,35 @@ import { transportRouter } from "./Router/Destination.js";
 
 const app = express();
 const port = 3000;
-app.use(bodyParser.json());
+try {
+  app.use(bodyParser.json());
 
-// Authentication Routers
-app.use("/api/auth/users", authRouter); // Authentication for Users
-app.use("/api/auth/partners", authPartnerRouter); // Authentication for Partners
+  // Authentication Routers
+  app.use("/api/auth/users", authRouter); // Authentication for Users
+  app.use("/api/auth/partners", authPartnerRouter); // Authentication for Partners
 
-// Protected Routes (require access validation)
-app.use("/api/dropoff-locations", accessValidation, plasticWasteDonationRouter); // DropOff Locations for plastic waste donation
-app.use("/api/users", accessValidation, userRouter); // User Profiles
-app.use("/api/partners/locations", accessValidation, partnerRouter); // Partner Locations
-app.use("/api/datas/tourisms", accessValidation, tourismRouter); // Tourism Data
-app.use("/api/datas/foods", accessValidation ,foodRouter); // Food Data
-app.use("/api/transportation", accessValidation ,transportRouter)
+  // Protected Routes (require access validation)
+  app.use(
+    "/api/dropoff-locations",
+    accessValidation,
+    plasticWasteDonationRouter
+  ); // DropOff Locations for plastic waste donation
+  app.use("/api/users", accessValidation, userRouter); // User Profiles
+  app.use("/api/partners/locations", accessValidation, partnerRouter); // Partner Locations
+  app.use("/api/datas/tourisms", accessValidation, tourismRouter); // Tourism Data
+  app.use("/api/datas/foods", accessValidation, foodRouter); // Food Data
+  app.use("/api/transportation", accessValidation, transportRouter);
 
-// Public Data Routers
-app.use("/api/datas/users", dataUserRouter); // Public User Data
-app.use("/api/datas/partners", datasPartnerRouter); // Public Partner Data
+  // Public Data Routers
+  app.use("/api/datas/users", dataUserRouter); // Public User Data
+  app.use("/api/datas/partners", datasPartnerRouter); // Public Partner Data
 
-// MiddleWare Error Handler
-app.use(errorHandler);
+  // MiddleWare Error Handler
+  app.use(errorHandler);
 
-app.listen(port, function () {
-  console.log("Server berhasil dijalankan pada port " + port);
-});
+  app.listen(port, function () {
+    alert("Server berhasil dijalankan pada port " + port);
+  });
+} catch (error) {
+  console.log(error);
+}
