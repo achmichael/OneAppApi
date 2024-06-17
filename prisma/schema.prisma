@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id           Int          @id @default(autoincrement())
+  email        String       @unique
+  password     String
+  name         String
+  dateOfBirth  String?     
+  points       Int          @default(0)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  profile      UserProfile?
+  donations    Donation[]
+  userVouchers UserVoucher[]
+  latitude     Float?
+  longitude    Float?
+}
+model UserProfile {
+  id            Int      @id @default(autoincrement())
+  userId        Int      @unique
+  profilePicture String?
+  phoneNumber   String?
+  address       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id])
+}
+model DropOffLocation {
+  id         Int        @id @default(autoincrement())
+  name       String
+  address    String
+  latitude   Float
+  longitude  Float
+  url        String 
+  qrCode     String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  donations  Donation[]
+}
+model Donation {
+  id             Int       @id @default(autoincrement())
+  userId         Int
+  locationId     Int
+  weight         Float
+  plasticType    String
+  pointsAwarded  Int
+  createdAt      DateTime  @default(now())
+  user           User      @relation(fields: [userId], references: [id])
+  location       DropOffLocation @relation(fields: [locationId], references: [id])
+}
+
+model Voucher {
+  id             Int       @id @default(autoincrement())
+  partnerId      Int
+  description    String
+  pointsRequired Int
+  expiryDate     DateTime
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  userVouchers   UserVoucher[]
+  partner        Partner    @relation(fields: [partnerId], references: [id])
+}
+model UserVoucher {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  voucherId  Int
+  redeemedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  user       User      @relation(fields: [userId], references: [id])
+  voucher    Voucher   @relation(fields: [voucherId], references: [id])
+}
+model Partner {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  password     String
+  businessName String    
+  location     String
+  latitude     Float?
+  longitude    Float?
+  type         String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  vouchers     Voucher[]
+}
+model Tourism {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  img         String
+  rating      Float
+  mapUrl      String
+}
+model FoodItem {
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Int      // Harga dalam poin
+  rating      Float
+  img         String   // URL gambar makanan
+}

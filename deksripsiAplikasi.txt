@@ -1,0 +1,26 @@
+ReBornPlastic adalah aplikasi mobile inovatif yang dirancang untuk mengatasi masalah serius pengelolaan limbah plastik dengan memberikan insentif kepada individu untuk aktif berpartisipasi dalam daur ulang. Dengan bermitra dengan berbagai lembaga dan bisnis, aplikasi ini menyediakan lokasi penitipan yang nyaman bagi pengguna dan memberi mereka hadiah berupa poin yang bisa ditukarkan dengan voucher belanja. Sistem tertutup ini tidak hanya mendorong daur ulang tetapi juga mendukung pembuatan produk berharga dari bahan daur ulang, yang berkontribusi pada ekonomi lingkaran yang berkelanjutan.
+
+Fitur Utama:
+Manajemen Pendaftaran dan Profil Pengguna:
+Pendaftaran/Masuk: Pengguna dapat mendaftar menggunakan email atau akun media sosial mereka. Otentikasi yang aman memastikan privasi data pengguna.
+Dasbor Profil: Pengguna dapat mengelola detail pribadi, melacak aktivitas daur ulang, dan memantau akumulasi poin.
+
+Proses Donasi Limbah Plastik:
+Pemetaan Lokasi: Aplikasi ini terintegrasi dengan GPS untuk menampilkan lokasi mitra terdekat (misalnya universitas, kedai kopi) di mana pengguna dapat menitipkan limbah plastik.
+Sistem Kode QR: Setiap lokasi penitipan memiliki kode QR unik. Pengguna memindai kode ini saat menyetorkan limbah plastik untuk memverifikasi transaksi.
+
+Akumulasi dan Penebusan Poin:
+Penetapan Poin: Poin diberikan berdasarkan jumlah dan jenis limbah plastik yang didonasikan. Aplikasi menggunakan algoritma internal untuk menghitung poin secara adil.
+Penebusan Voucher: Poin yang terkumpul dapat ditukarkan dengan voucher belanja dari bisnis mitra termasuk kedai kopi dan merek fashion, data internet, e-money yang bisa digunakan untuk transportasi umum atau membeli tiket hiburan. Pengguna dapat menelusuri voucher yang tersedia dan menebusnya langsung melalui aplikasi.
+
+Integrasi dengan Mitra:
+Lokasi Penitipan: Institusi mitra dan bisnis dilengkapi dengan infrastruktur yang diperlukan untuk menerima limbah plastik. Aplikasi ini memberikan pembaruan real-time tentang status lokasi ini.
+Mitra Voucher: ReBornPlastic bekerja sama dengan berbagai merek untuk menawarkan hadiah menarik, meningkatkan motivasi pengguna untuk berpartisipasi dalam daur ulang.
+
+Pengelolaan Limbah Plastik:
+Kemitraan Bisnis: ReBornPlastic bermitra dengan LSM dan organisasi daur ulang lainnya yang mengkhususkan diri dalam daur ulang untuk memastikan limbah plastik yang terkumpul diproses secara efisien dan berkelanjutan.
+Produk Daur Ulang: Plastik yang didaur ulang diubah menjadi produk bernilai, menghasilkan pendapatan yang mendukung operasi aplikasi dan mitra-mitra.
+
+Analisis Data dan Pelaporan:
+Metrik Keterlibatan Pengguna: Aplikasi melacak keterlibatan pengguna, memberikan wawasan tentang jumlah plastik yang didaur ulang dan poin yang ditebus.
+Laporan Dampak Lingkungan: Pengguna dan mitra menerima laporan periodik yang menyoroti dampak lingkungan positif dari kontribusi mereka.

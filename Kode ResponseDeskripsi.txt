@@ -1,0 +1,12 @@
+Kode	Deskripsi
+200	OK: Semuanya baik-baik saja. Permintaan berhasil diakomodasi.
+201	Created: Permintaan berhasil dan sumber daya baru telah dibuat.
+204	No Content: Permintaan berhasil, tetapi tidak ada konten untuk dikirimkan kembali.
+400	Bad Request: Permintaan tidak dapat diproses karena kesalahan klien.
+401	Unauthorized: Permintaan memerlukan autentikasi. Credensial mungkin hilang atau salah.
+403	Forbidden: Klien tidak memiliki izin untuk akses sumber daya tersebut.
+404	Not Found: Sumber daya yang diminta tidak ditemukan.
+405	Method Not Allowed: Metode yang diminta tidak diizinkan untuk sumber daya ini.
+500	Internal Server Error: Ada masalah dengan server, bukan kesalahan klien.
+502	Bad Gateway: Server yang bertindak sebagai gateway tidak mendapatkan respon yang valid.
+503	Service Unavailable: Server sementara tidak dapat menangani permintaan (biasanya karena overload atau
