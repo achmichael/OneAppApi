@@ -16,7 +16,15 @@ import { transportRouter } from "./Router/Destination.js";
 
 const app = express();
 const port = 3000;
+const cors = require('cors');
+const corsConfig = {
+  origin: "*",
+  credential : true,
+  methods: ["GET", "POST", "PUT", "DELETE"]
+};
 try {
+  app.options("", cors(corsConfig))
+  app.use(cors(corsConfig));
   app.use(bodyParser.json());
 
   // Authentication Routers
