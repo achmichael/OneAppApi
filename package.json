@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node --watch src/index.js",
+    "build" : "echo Building...",
     "vercel-build": "npm run build",
     "postinstall": "prisma generate"
   },
