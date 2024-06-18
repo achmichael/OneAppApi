@@ -44,21 +44,21 @@ API ini menggunakan **Bcrypt** untuk hashing password. Bcrypt adalah algoritma h
 
 Auth Router memiliki endpoint untuk registrasi dan login pengguna serta mitra.
 
-Endpoint **User Sign-Up** `POST /auth/users/register` memungkinkan pengguna baru mendaftar dengan mengirimkan email, password, nama, dan tanggal lahir dalam bentuk JSON. Respon sukses berisi pesan konfirmasi dan data pengguna.
+Endpoint **User Sign-Up** `POST /register/users` memungkinkan pengguna baru mendaftar dengan mengirimkan email, password, nama, dan tanggal lahir dalam bentuk JSON. Respon sukses berisi pesan konfirmasi dan data pengguna.
 
-Endpoint **User Login** `POST /auth/users/login` memungkinkan pengguna yang telah terdaftar untuk login dengan mengirimkan email dan password. Respon sukses berisi pesan konfirmasi dan token autentikasi.
+Demikian pula, endpoint **Partner Sign-Up** `POST /register/partners` 
 
-Demikian pula, endpoint **Partner Sign-Up** `POST /auth/partners/register` dan **Partner Login** `POST /auth/partners/login` digunakan oleh mitra bisnis untuk mendaftar dan login, dengan format permintaan dan respon yang serupa.
+Dan Endpoint **login** `POST /auth/login` yang memungkinkan user dan partner bisa login, kemudian response nya berupa konfirmasi login berhasil, bearer token yang digunakan untuk validasi, dan juga role yang bisa digunakan untuk menentukan routing selanjutnya.
 
 ## 2. Profile Router
 
 Profile Router menyediakan endpoint untuk mengelola profil pengguna.
 
-Endpoint `GET /api/profile` digunakan untuk mendapatkan data profil pengguna yang autentikasi, dengan menyertakan token dalam header permintaan. Respon sukses mengembalikan data profil seperti ID, userId, URL gambar profil, nomor telepon, alamat, serta waktu pembuatan dan pembaruan.
+Endpoint `GET /profile` digunakan untuk mendapatkan data profil pengguna yang autentikasi, dengan menyertakan token dalam header permintaan. Respon sukses mengembalikan data profil seperti ID, userId, URL gambar profil, nomor telepon, alamat, serta waktu pembuatan dan pembaruan.
 
-Endpoint `PUT /api/profile` memungkinkan pengguna untuk memperbarui profil mereka dengan mengirimkan data profil baru dalam bentuk JSON, sementara endpoint `POST /api/profile` digunakan untuk membuat data profil baru.
+Endpoint `PUT /profile` memungkinkan pengguna untuk memperbarui profil mereka dengan mengirimkan data profil baru dalam bentuk JSON, sementara endpoint `POST /profile` digunakan untuk membuat data profil baru.
 
-Endpoint `DELETE /api/profile` digunakan untuk menghapus data profil pengguna yang autentikasi, dan `GET /api/:user_id/profile` memungkinkan pengambilan data profil berdasarkan userId.
+Endpoint `DELETE /profile` digunakan untuk menghapus data profil pengguna yang autentikasi, dan `GET /:user_id/profile` memungkinkan pengambilan data profil berdasarkan userId.
 
 ## 3. Data User Router
 
@@ -169,7 +169,7 @@ Dengan dokumentasi ini, pengembang dapat dengan mudah memahami cara menggunakan 
 
 - **METHOD** : `POST`
 
-- **ENDPOINT** : `/auth/users/login`
+- **ENDPOINT** : `/auth/login`
 
 - **Content-Type**: `application/json`
 
@@ -188,7 +188,8 @@ Dengan dokumentasi ini, pengembang dapat dengan mudah memahami cara menggunakan 
     ```json
     {
       "message": "login successfully",
-      "token": "Bearer Token"
+      "token": "Bearer Token",
+      "role" : "user"
     }
     ```
 
@@ -233,7 +234,7 @@ Dengan dokumentasi ini, pengembang dapat dengan mudah memahami cara menggunakan 
 
 - **METHOD** : `POST`
 
-- **ENDPOINT** : `/auth/partners/login`
+- **ENDPOINT** : `/auth/login`
 
 - **Content-Type**: `application/json`
 
@@ -252,7 +253,8 @@ Dengan dokumentasi ini, pengembang dapat dengan mudah memahami cara menggunakan 
     ```json
     {
       "message": "login successfully",
-      "token": "Bearer Token"
+      "token": "Bearer Token",
+      "role" : "partner"
     }
     ```
 
