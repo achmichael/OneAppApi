@@ -82,6 +82,7 @@ Data User Router mencakup endpoint untuk mengelola data pengguna.
 - **Get Users**: `GET /datas/users`
 - **Get User by ID**: `GET /datas/users/:user_id`
 - **Update User**: `PUT /datas/users/:user_id`
+- **Create User**: `POST /register/users`
 - **Delete User**: `DELETE /datas/users/:user_id`
 
 ### 8.4 Data Partner Router
@@ -89,6 +90,7 @@ Data Partner Router memiliki endpoint untuk mengelola data mitra bisnis.
 
 - **Get Partners**: `GET /datas/partners`
 - **Get Partner by ID**: `GET /datas/partners/:partner_id`
+- **Create Partner**: `POST /register/partners`
 - **Update Partner**: `PUT /datas/partners/:partner_id`
 - **Delete Partner**: `DELETE /datas/partners/:partner_id`
 
