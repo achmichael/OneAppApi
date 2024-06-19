@@ -1,10 +1,38 @@
-node_modules
-# Keep environment variables out of version control
+# Node modules
+node_modules/
+
+# Environment variables
 .env
-prisma
+
+# Prisma files
+prisma/
+!prisma/schema.prisma # Mengecualikan file schema.prisma dari pengecualian prisma
+prisma/migrations/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Locks
 package-lock.json
-schema.prisma
-prisma/migrations
+yarn.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# IDE specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Descriptive files
 deskripsiAplikasi.txt
 Kode ResponseDeskripsi.txt
 routingFinalProject.txt
