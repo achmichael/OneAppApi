@@ -3,3 +3,8 @@ node_modules
 .env
 prisma
 package-lock.json
+schema.prisma
+prisma/migrations
+deskripsiAplikasi.txt
+Kode ResponseDeskripsi.txt
+routingFinalProject.txt

@@ -1,27 +1,25 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { authRouter } from "./Router/UserAuthenticationRouter.js";
+import { registerRouter } from "./Router/RegisterRouter.js";
 import { errorHandler } from "./Middleware/errorHandler.js";
 import { accessValidation } from "./Middleware/accessValidation.js";
 import { userRouter } from "./Router/UserProfileRouter.js";
 import { plasticWasteDonationRouter } from "./Router/PlasticWasteDonationRouter.js";
-import { authPartnerRouter } from "./Router/PartnerAuthentication.js";
 import { dataUserRouter } from "./Router/GetDataUserRouter.js";
 import { partnerRouter } from "./Router/PartnerRouter.js";
-import { datasPartnerRouter } from "./Router/getDataPartnerRouter.js";
+import { datasPartnerRouter } from "./Router/GetDataPartnerRouter.js";
 import { tourismRouter } from "./Router/TourismRouter.js";
 import { foodRouter } from "./Router/FoodRouter.js";
 import { transportRouter } from "./Router/Destination.js";
+import { authenticationRouter } from "./Router/AuthRouter.js";
 
 const app = express();
 const port = 3000;
 try {
   app.use(bodyParser.json());
-
   // Authentication Routers
-  app.use("/api/auth/users", authRouter); // Authentication for Users
-  app.use("/api/auth/partners", authPartnerRouter); // Authentication for Partners
-
+  app.use("/api/register", registerRouter); // Register Users And Partners
+  app.use("/api/auth/login", authenticationRouter);
   // Protected Routes (require access validation)
   app.use(
     "/api/dropoff-locations",

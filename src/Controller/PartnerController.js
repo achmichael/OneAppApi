@@ -1,59 +1,53 @@
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { ResponseError } from "../Config/error.js";
-const prisma = new PrismaClient();
-export const login = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    const partner = await prisma.partner.findUnique({
-      where: { email },
-    });
-    if (!partner) {
-      return next(new ResponseError(400, "Email not Found"));
-    }
-    const isValidPassword = await bcrypt.compare(password, partner.password);
-    if (!isValidPassword) {
-      return next(new ResponseError(400, "Invalid password"));
-    }
-    const jwtToken = process.env.JWT_SECRET;
-    const token = jwt.sign({ partnerId: partner.id }, jwtToken, {
-      expiresIn: "1h",
-    });
-    res.status(200).json({ message: "Login Successfully", token: token });
-  } catch (error) {
-    next(error);
-  }
-};
-export const register = async (req, res, next) => {
-  try {
-    const {
-      businessName,
-      email,
-      password,
-      type,
-      location,
-      latitude,
-      longitude,
-    } = req.body;
+  import bcrypt from "bcrypt";
+  import { CreatePartner, GetAllPartners } from "../UseCases/CreatePartner.js";
+  import PartnerRepository from "../Gateways/PartnerRepository.js";
+  import FindNearestPartners from "../UseCases/FindNearestPartners.js";
+  import { Partner } from "../Entities/Partner.js";
+  const getAllPartners = new GetAllPartners(PartnerRepository);
+  export const registerPartner = async (req, res, next) => {
+    const { businessName, email, password, type, location, latitude, longitude } =
+      req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const partner = await prisma.partner.create({
-      data: {
-        businessName,
-        email,
-        password: hashedPassword,
-        type,
-        location,
-        latitude,
-        longitude,
-      },
+    const createPartner = new CreatePartner(PartnerRepository);
+    const partner = new Partner({
+      businessName: businessName,
+      email: email,
+      password: hashedPassword,
+      type: type,
+      location: location,
+      latitude: latitude,
+      longitude: longitude,
     });
-    res.status(201).json({
-      message: "Partner created successfully",
-      partner,
-    });
-  } catch (error) {
-    console.log(error.stack);
-    next(error);
-  }
-};
+    try {
+      const result = await createPartner.execute(partner);
+      res
+        .status(201)
+        .json({ message: "Partner created successfully", data: result });
+    } catch (error) {
+      console.log(error.stack);
+      next(error);
+    }
+  };
+  export const findNearestPartners = async (req, res, next) => {
+    try {
+      const userId = req.user.userId;
+      const findNearestPartnersUseCase = new FindNearestPartners(PartnerRepository);
+      const nearestPartners = await findNearestPartnersUseCase.execute(userId);
+      res.json(nearestPartners);
+    } catch (error) {
+      console.log(error.stack);
+      next(error);
+    }
+  };
+  export const findLocations = async (req, res, next) => {
+    try {
+      const locations = await getAllPartners.execute();
+      if (!locations) {
+        return next(new ResponseError(404, "No partner locations found"));
+      }
+      res.status(200).json(locations);
+    } catch (error) {
+      console.log(error.stack);
+      next(error);
+    }
+  };

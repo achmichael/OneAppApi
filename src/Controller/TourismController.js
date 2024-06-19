@@ -1,10 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { ResponseError } from "../Config/error.js";
+import TourismRepository from "../Gateways/TourismRepository.js";
+import { GetTourisms, GetTourismById, AddTourism } from "../UseCases/GetAndCreateTourism.js";
 const prisma = new PrismaClient();
 
 export const getDatasTourism = async function (req, res, next) {
   try {
-    const tourisms = await prisma.tourism.findMany();
+    const datas = new GetTourisms(TourismRepository);
+    const tourisms = await datas.execute();
     if (!tourisms) {
       return next(new ResponseError(404, "No Tourisms Found"));
     }
@@ -15,12 +18,9 @@ export const getDatasTourism = async function (req, res, next) {
 };
 export const getDataTourism = async function (req, res, next) {
   try {
-    const tourismId = req.params.tourism_id;
-    const tourism = await prisma.tourism.findUnique({
-      where: {
-        id: parseInt(tourismId),
-      },
-    });
+    const tourismId = parseInt(req.params.tourism_id);
+    const result = new GetTourismById(TourismRepository);
+    const tourism = await result.execute(tourismId);
     if (!tourism) {
       return next(
         new ResponseError(404, `Tourism With Id : ${tourismId} Not Found`)
@@ -33,22 +33,9 @@ export const getDataTourism = async function (req, res, next) {
 };
 export const addDataTourism = async function (req, res, next) {
   try {
-    let newTourisms = "";
     const datas = req.body;
-    if (Array.isArray(datas)) {
-      newTourisms = await prisma.tourism.createMany({
-        data: datas,
-      });
-    }
-    if (newTourisms) {
-      return res.status(201).json({
-        message: "Tourism created successfully",
-        tourism: newTourisms,
-      });
-    }
-    const newTourism = await prisma.tourism.create({
-      data: datas,
-    });
+    const addTourism = new AddTourism(TourismRepository);
+    const newTourism = await addTourism.execute(datas);
     res.status(201).json({
       message: "Tourism created successfully",
       tourism: newTourism,

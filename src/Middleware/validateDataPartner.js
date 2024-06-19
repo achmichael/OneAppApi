@@ -2,7 +2,7 @@ import { ResponseError } from "../Config/error.js";
 function isValidInput(input) {
   return input.trim().length > 0;
 }
-export function validateUserId(req, res, next) {
+export function validatePartnerId(req, res, next) {
   const userId = req.params.id;
   const isNumber = /^\d+$/.test(userId);
   if (!userId) {

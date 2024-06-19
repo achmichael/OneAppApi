@@ -2,6 +2,9 @@
 
 API One App menggunakan berbagai komponen untuk membangun dan mengelola fungsionalitasnya. Berikut adalah deskripsi singkat dari setiap komponen beserta tautan untuk mempelajari lebih lanjut:
 
+API One App menerapkan prinsip Clean Architecture yang bertujuan untuk menjaga keterpisahan antara berbagai komponen dalam sistem, memudahkan pengelolaan dan pemeliharaan kode, serta meningkatkan skalabilitas dan fleksibilitas aplikasi. Dalam implementasi Clean Architecture pada API One App, kami menggunakan beberapa komponen utama, yaitu **Entities**, **Gateways**, **Use Cases**, dan **Controllers**. Berikut ini adalah penjelasan mengenai implementasi setiap komponen tersebut:
+
+
 ## 1. Node.js
 API ini menggunakan **Node.js**, sebuah runtime JavaScript yang berjalan di server. Node.js memungkinkan penggunaan JavaScript untuk pengembangan sisi server dan memiliki ekosistem npm yang kaya dengan berbagai pustaka dan tools.
 
@@ -14,120 +17,114 @@ API ini menggunakan **Node.js**, sebuah runtime JavaScript yang berjalan di serv
 - **Penjelasan**: [Sejarah JavaScript](https://en.wikipedia.org/wiki/JavaScript#History)
 - **Link**: [JavaScript History on Wikipedia](https://en.wikipedia.org/wiki/JavaScript#History)
 
-## 3. Express.js
-API ini menggunakan **Express.js**, sebuah framework aplikasi web untuk Node.js yang minimalis dan fleksibel. Express menyediakan berbagai fitur untuk membangun aplikasi web dan API dengan mudah, seperti routing, middleware, dan pengelolaan request/response.
+## 3. Struktur Clean Architecture
+
+Prinsip Clean Architecture membagi sistem menjadi beberapa lapisan dengan tanggung jawab yang jelas. Berikut adalah komponen yang digunakan dalam API One App:
+
+### 3.1 Entities
+Entities adalah objek bisnis yang mewakili data dan aturan logika bisnis utama dalam aplikasi. Mereka independen terhadap teknologi yang digunakan dan fokus pada aturan-aturan bisnis yang berlaku.
+
+### 3.2 Gateways
+Gateways adalah antarmuka yang menghubungkan aplikasi dengan layanan atau sumber daya eksternal seperti database, API eksternal, dan sistem I/O lainnya. Gateways memastikan bahwa lapisan Use Cases tidak terikat dengan detail implementasi layanan eksternal.
+
+### 3.3 Use Cases
+Use Cases berfungsi sebagai aplikasi spesifik logika bisnis yang mengorchestrasi interaksi antara Entities dan Gateways. Mereka bertanggung jawab untuk memproses permintaan dari Controllers dan memastikan bahwa aturan bisnis dijalankan dengan benar.
+
+### 3.4 Controllers
+Controllers menerima input dari pengguna atau klien, memprosesnya melalui Use Cases yang sesuai, dan mengembalikan respon yang sesuai. Controllers bertanggung jawab untuk menangani request dan response serta berinteraksi dengan lapisan Use Cases.
+
+## 4. Penggunaan Express.js
+API ini menggunakan **Express.js**, sebuah framework aplikasi web untuk Node.js yang minimalis dan fleksibel. Dalam Clean Architecture, Express.js digunakan untuk mengelola routing, middleware, dan pengelolaan request/response dalam lapisan Controllers.
 
 - **Penjelasan**: [Express.js](https://expressjs.com/)
 - **Link**: [Express.js Documentation](https://expressjs.com/en/starter/installing.html)
 
-## 4. Prisma
-API ini menggunakan **Prisma**, sebuah ORM (Object-Relational Mapping) modern untuk Node.js dan TypeScript. Prisma mempermudah interaksi dengan database dengan menyediakan tipe yang aman, auto-completion, dan migrasi database.
+## 5. Prisma ORM
+API ini menggunakan **Prisma**, sebuah ORM (Object-Relational Mapping) modern untuk Node.js dan TypeScript. Prisma mempermudah interaksi dengan database dan ditempatkan di lapisan Gateways. Prisma menyediakan tipe yang aman, auto-completion, dan migrasi database.
 
 - **Penjelasan**: [Prisma](https://www.prisma.io/)
 - **Link**: [Prisma Documentation](https://www.prisma.io/docs/)
 
-## 5. JSON Web Token (JWT)
-API ini menggunakan **JSON Web Token (JWT)** untuk autentikasi dan otorisasi pengguna. JWT adalah standar terbuka yang memungkinkan pertukaran informasi autentikasi yang aman antara dua pihak.
+## 6. JSON Web Token (JWT)
+API ini menggunakan **JSON Web Token (JWT)** untuk autentikasi dan otorisasi pengguna. JWT berada di lapisan Gateways dan digunakan untuk pertukaran informasi autentikasi yang aman antara dua pihak.
 
 - **Penjelasan**: [JWT](https://jwt.io/introduction)
 - **Link**: [JWT Introduction](https://jwt.io/introduction)
 
-## 6. Bcrypt
-API ini menggunakan **Bcrypt** untuk hashing password. Bcrypt adalah algoritma hashing yang dirancang untuk mengamankan password dengan menambahkan salt dan melakukan multiple rounds of hashing.
+## 7. Bcrypt
+API ini menggunakan **Bcrypt** untuk hashing password. Bcrypt berada di lapisan Gateways dan menyediakan algoritma hashing yang aman untuk pengelolaan password.
 
 - **Penjelasan**: [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt)
 - **Link**: [Bcrypt on npm](https://www.npmjs.com/package/bcrypt)
 
-## API One App menyediakan berbagai endpoint untuk mengelola proses autentikasi, profil pengguna, lokasi drop-off, serta integrasi dengan mitra bisnis.
+## 8. Struktur API dan Router
+API One App menggunakan beberapa router untuk mengelola berbagai aspek aplikasi. Setiap router bertanggung jawab untuk menangani request yang spesifik dan meneruskannya ke lapisan Use Cases untuk diproses lebih lanjut.
 
-## 1. Auth Router
-
+### 8.1 Auth Router
 Auth Router memiliki endpoint untuk registrasi dan login pengguna serta mitra.
 
-Endpoint **User Sign-Up** `POST /register/users` memungkinkan pengguna baru mendaftar dengan mengirimkan email, password, nama, dan tanggal lahir dalam bentuk JSON. Respon sukses berisi pesan konfirmasi dan data pengguna.
+- **User Sign-Up**: `POST /register/users`
+- **Partner Sign-Up**: `POST /register/partners`
+- **Login**: `POST /auth/login`
 
-Demikian pula, endpoint **Partner Sign-Up** `POST /register/partners` 
-
-Dan Endpoint **login** `POST /auth/login` yang memungkinkan user dan partner bisa login, kemudian response nya berupa konfirmasi login berhasil, bearer token yang digunakan untuk validasi, dan juga role yang bisa digunakan untuk menentukan routing selanjutnya.
-
-## 2. Profile Router
-
+### 8.2 Profile Router
 Profile Router menyediakan endpoint untuk mengelola profil pengguna.
 
-Endpoint `GET /profile` digunakan untuk mendapatkan data profil pengguna yang autentikasi, dengan menyertakan token dalam header permintaan. Respon sukses mengembalikan data profil seperti ID, userId, URL gambar profil, nomor telepon, alamat, serta waktu pembuatan dan pembaruan.
+- **Get Profile**: `GET /profile`
+- **Update Profile**: `PUT /profile`
+- **Create Profile**: `POST /profile`
+- **Delete Profile**: `DELETE /profile`
+- **Get Profile by User ID**: `GET /:user_id/profile`
 
-Endpoint `PUT /profile` memungkinkan pengguna untuk memperbarui profil mereka dengan mengirimkan data profil baru dalam bentuk JSON, sementara endpoint `POST /profile` digunakan untuk membuat data profil baru.
-
-Endpoint `DELETE /profile` digunakan untuk menghapus data profil pengguna yang autentikasi, dan `GET /:user_id/profile` memungkinkan pengambilan data profil berdasarkan userId.
-
-## 3. Data User Router
-
+### 8.3 Data User Router
 Data User Router mencakup endpoint untuk mengelola data pengguna.
 
-Endpoint `GET /datas/users` mengembalikan daftar data pengguna yang tersedia.
+- **Get Users**: `GET /datas/users`
+- **Get User by ID**: `GET /datas/users/:user_id`
+- **Update User**: `PUT /datas/users/:user_id`
+- **Delete User**: `DELETE /datas/users/:user_id`
 
-Endpoint `GET /datas/users/:user_id` digunakan untuk mendapatkan data pengguna berdasarkan user ID.
-
-Endpoint `PUT /datas/users/:user_id` memungkinkan pembaruan data pengguna berdasarkan user ID, dan endpoint `DELETE /datas/users/:user_id` digunakan untuk menghapus data pengguna berdasarkan user ID.
-
-## 4. Data Partner Router
-
+### 8.4 Data Partner Router
 Data Partner Router memiliki endpoint untuk mengelola data mitra bisnis.
 
-Endpoint `GET /datas/partners` mengembalikan daftar data mitra yang tersedia.
+- **Get Partners**: `GET /datas/partners`
+- **Get Partner by ID**: `GET /datas/partners/:partner_id`
+- **Update Partner**: `PUT /datas/partners/:partner_id`
+- **Delete Partner**: `DELETE /datas/partners/:partner_id`
 
-Endpoint `GET /datas/partners/:partner_id` digunakan untuk mendapatkan data mitra berdasarkan partner ID.
-
-Endpoint `PUT /datas/partners/:partner_id` memungkinkan pembaruan data mitra berdasarkan partner ID, dan endpoint `DELETE /datas/partners/:partner_id` digunakan untuk menghapus data mitra berdasarkan partner ID.
-
-## 5. Location Partner Router
-
+### 8.5 Location Partner Router
 Location Partner Router mencakup endpoint untuk mengelola lokasi mitra.
 
-Endpoint `GET /partners/locations` mengembalikan daftar lokasi mitra yang tersedia.
+- **Get Partner Locations**: `GET /partners/locations`
+- **Get Nearby Partner Locations**: `GET /partners/locations/nearby`
 
-Endpoint `GET /partners/locations/nearby` digunakan untuk mendapatkan daftar lokasi mitra terdekat berdasarkan posisi pengguna.
-
-## 6. Location Mapping Router
-
+### 8.6 Location Mapping Router
 Location Mapping Router mencakup endpoint untuk mengelola lokasi drop-off.
 
-Endpoint `GET /dropoff-locations` mengembalikan daftar lokasi drop-off yang tersedia.
+- **Get Drop-off Locations**: `GET /dropoff-locations`
+- **Add Drop-off Location**: `POST /locations`
+- **Get Drop-off Location by ID**: `GET /dropoff-locations/:location_id/location`
+- **Update Drop-off Location**: `PUT /dropoff-locations/:location_id/location`
+- **Delete Drop-off Location**: `DELETE /api/dropoff-locations/:location_id/location`
 
-Endpoint `POST /locations` digunakan untuk menambahkan lokasi drop-off baru dengan data seperti nama, alamat, koordinat latitude dan longitude, serta URL QR code dalam bentuk JSON. Respon sukses mengembalikan pesan konfirmasi beserta data lokasi yang baru ditambahkan.
-
-Endpoint `GET /dropoff-locations/:location_id/location` digunakan untuk mendapatkan data lokasi berdasarkan ID lokasi.
-
-Endpoint `PUT /dropoff-locations/:location_id/location` memungkinkan pembaruan data lokasi berdasarkan ID lokasi, dan endpoint `DELETE /api/dropoff-locations/:location_id/location` digunakan untuk menghapus data lokasi berdasarkan ID lokasi.
-
-## 7. Transportation Router
-
+### 8.7 Transportation Router
 Transportation Router mencakup endpoint untuk mengelola transportasi.
 
-Endpoint `POST /transportation/pick-destination` digunakan untuk mengukur jarak pengguna dengan tujuan dan menentukan harga per kilometer yang ditempuh oleh pengguna.
+- **Pick Destination**: `POST /transportation/pick-destination`
 
-## 8. Tourism Router
-
+### 8.8 Tourism Router
 Tourism Router mencakup endpoint untuk mengelola data pariwisata.
 
-Endpoint `GET /datas/tourisms` mengembalikan daftar data lokasi pariwisata yang tersedia.
+- **Get Tourisms**: `GET /datas/tourisms`
+- **Get Tourism by ID**: `GET /datas/tourisms/:tourism_id`
+- **Add Tourism**: `POST /datas/tourisms`
 
-Endpoint `GET /datas/tourisms/:tourism_id` digunakan untuk mendapatkan data lokasi pariwisata berdasarkan ID.
-
-Endpoint `POST /datas/tourisms` digunakan untuk menambahkan data lokasi pariwisata baru.
-
-## 9. Food Router
-
+### 8.9 Food Router
 Food Router mencakup endpoint untuk mengelola data makanan.
 
-Endpoint `GET /datas/foods` mengembalikan daftar data makanan yang tersedia untuk ditukarkan dengan voucher.
-
-Endpoint `GET /datas/foods/:food_id` digunakan untuk mendapatkan data makanan berdasarkan ID.
-
-Endpoint `POST /datas/foods` digunakan untuk menambahkan data makanan baru.
-
-Dengan dokumentasi ini, pengembang dapat dengan mudah memahami cara menggunakan setiap endpoint, format permintaan dan respon yang diharapkan, serta berbagai fitur yang disediakan oleh API One App untuk mendukung proses manajemen dan pelaporan donasi sampah plastik.
-
+- **Get Foods**: `GET /datas/foods`
+- **Get Food by ID**: `GET /datas/foods/:food_id`
+- **Add Food**: `POST /datas/foods`
 
 #### BASE URL : `localhost:3000/api`
 

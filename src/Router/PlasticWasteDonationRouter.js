@@ -8,7 +8,7 @@ import {
 } from "../Middleware/validateDropOffLocation.js";
 import {
   deleteDataLocation,
-  findNearestDropOffLocation,
+  findNearestDropOffLocations,
   getDataLocation,
   getDatasLocations,
   updateDataLocation,
@@ -29,5 +29,5 @@ plasticWasteDonationRouter.put(
   updateDataLocation
 );
 plasticWasteDonationRouter.delete("/:location_id/location", validateLocationId, deleteDataLocation);
-plasticWasteDonationRouter.get("/nearby", findNearestDropOffLocation);
+plasticWasteDonationRouter.get("/nearby", findNearestDropOffLocations);
 plasticWasteDonationRouter.post('/scan', scanQr);
