@@ -70,11 +70,11 @@ Auth Router memiliki endpoint untuk registrasi dan login pengguna serta mitra.
 ### 8.2 Profile Router
 Profile Router menyediakan endpoint untuk mengelola profil pengguna.
 
-- **Get Profile**: `GET /profile`
-- **Update Profile**: `PUT /profile`
-- **Create Profile**: `POST /profile`
-- **Delete Profile**: `DELETE /profile`
-- **Get Profile by User ID**: `GET /:user_id/profile`
+- **Get Profile**: `GET /users/profile`
+- **Update Profile**: `PUT /users/profile`
+- **Create Profile**: `POST /users/profile`
+- **Delete Profile**: `DELETE /users/profile`
+- **Get Profile by User ID**: `GET /users/:user_id/profile`
 
 ### 8.3 Data User Router
 Data User Router mencakup endpoint untuk mengelola data pengguna.
@@ -135,7 +135,7 @@ Food Router mencakup endpoint untuk mengelola data makanan.
 - ### User Sign-Up
 
 - **METHOD** : `POST`
-- **ENDPOINT** : `/auth/users/register`
+- **ENDPOINT** : `/register/users`
 - **Content-Type**: `application/json`
 
   - **_`Request Body`_**
@@ -196,7 +196,7 @@ Food Router mencakup endpoint untuk mengelola data makanan.
 
 - **METHOD** : `POST`
 
-- **ENDPOINT** : `/auth/partners/register`
+- **ENDPOINT** : `/register/partners`
 
 - **Content-Type**: `application/json`
 
